@@ -13,7 +13,11 @@ import com.example.goodminton.R
 @Composable
 fun TopBar() {
     CenterAlignedTopAppBar(
-        title = { Text(stringResource(R.string.top_bar_title)) },
+        title = {
+            Text(
+                text = stringResource(R.string.top_bar_title)
+            )
+        },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary

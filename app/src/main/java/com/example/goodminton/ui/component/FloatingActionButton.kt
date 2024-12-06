@@ -13,7 +13,16 @@ import com.example.goodminton.R
 fun FloatingActionButton() {
     ExtendedFloatingActionButton(
         onClick = {},
-        icon = { Icon(Icons.Filled.Add, null) },
-        text = { Text(stringResource(R.string.fab_text)) }
+        icon = {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = null
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(R.string.fab_text)
+            )
+        }
     )
 }
