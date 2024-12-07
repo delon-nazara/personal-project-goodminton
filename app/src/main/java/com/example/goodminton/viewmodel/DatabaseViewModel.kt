@@ -27,26 +27,39 @@ class DatabaseViewModel : ViewModel() {
     private val _gameState = MutableStateFlow<List<GameModel>?>(null)
     val gameState: StateFlow<List<GameModel>?> = _gameState.asStateFlow()
 
+    private val _errorNameState = MutableStateFlow<String?>(null)
+    val errorNameState: StateFlow<String?> = _errorNameState.asStateFlow()
+
+    private val _errorLocationState = MutableStateFlow<String?>(null)
+    val errorLocationState: StateFlow<String?> = _errorLocationState.asStateFlow()
+
     fun createGameData(
         name: String,
         location: String,
         onSuccess: () -> Unit,
         onFailure: () -> Unit
     ) {
-        gameRef
-            .add(
-                GameModel(
-                    name = name,
-                    location = location,
-                    timestamp = System.currentTimeMillis()
+        if (name.isEmpty()) {
+            _errorNameState.update { "Name cannot be empty" }
+        } else if (location.isEmpty()) {
+            _errorNameState.update { null }
+            _errorLocationState.update { "Location cannot be empty" }
+        } else {
+            clearErrorState()
+            gameRef
+                .add(
+                    GameModel(
+                        name = name,
+                        location = location,
+                        timestamp = System.currentTimeMillis()
+                    )
                 )
-            )
-            .addOnSuccessListener { onSuccess() }
-            .addOnFailureListener { onFailure() }
+                .addOnSuccessListener { onSuccess() }
+                .addOnFailureListener { onFailure() }
+        }
     }
 
     fun readGameData(
-        onSuccess: () -> Unit,
         onFailure: () -> Unit
     ) {
         gameRef
@@ -58,9 +71,13 @@ class DatabaseViewModel : ViewModel() {
                         document.toObject(GameModel::class.java)
                     }
                 }
-                onSuccess()
             }
             .addOnFailureListener { onFailure() }
+    }
+
+    fun clearErrorState() {
+        _errorNameState.update { null }
+        _errorLocationState.update { null }
     }
 
 }

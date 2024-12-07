@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.goodminton.data.model.GameModel
@@ -25,12 +25,14 @@ fun GameCard(
 ) {
     ElevatedCard(
         onClick = {},
+        elevation = CardDefaults.elevatedCardElevation(
+            defaultElevation = 4.dp
+        ),
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(10.dp)
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
@@ -41,25 +43,25 @@ fun GameCard(
             ) {
                 Text(
                     text = timestampToDate(gameData.timestamp),
-                    fontSize = 14.sp,
-                    fontStyle = FontStyle.Italic
+                    style = MaterialTheme.typography.labelMedium
                 )
                 Text(
                     text = timestampToTime(gameData.timestamp),
-                    fontSize = 14.sp,
-                    fontStyle = FontStyle.Italic
+                    style = MaterialTheme.typography.labelMedium
                 )
             }
-            HorizontalDivider()
+            HorizontalDivider(
+                modifier = Modifier.padding(top = 6.dp)
+            )
             Text(
                 text = gameData.name,
+                style = MaterialTheme.typography.titleMedium,
                 fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 8.dp, bottom = 2.dp)
             )
             Text(
                 text = gameData.location,
-                fontSize = 14.sp
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }
