@@ -5,6 +5,7 @@
     <string name="agd_title">Add New Game</string>
     <string name="agd_name">Name</string>
     <string name="agd_location">Location</string>
+    <string name="agd_failure">Failed to add new game</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
 </resources>

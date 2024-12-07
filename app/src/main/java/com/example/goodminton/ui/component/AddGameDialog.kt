@@ -1,6 +1,5 @@
 package com.example.goodminton.ui.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,9 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -22,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,13 +29,14 @@ import com.example.goodminton.R
 @Preview
 @Composable
 fun AddGameDialog(
-    onDismissRequest: () -> Unit = {}
+    onCancel: () -> Unit = {},
+    onConfirm: (String, String) -> Unit = { _, _ -> }
 ) {
     var gameName by remember { mutableStateOf("") }
     var gameLocation by remember { mutableStateOf("") }
 
     Dialog(
-        onDismissRequest = { onDismissRequest() },
+        onDismissRequest = { onCancel() },
     ) {
         Card(
             modifier = Modifier
@@ -74,11 +70,11 @@ fun AddGameDialog(
                     modifier = Modifier.align(Alignment.End)
                 ) {
                     ActionButton(
-                        onDismissRequest = onDismissRequest,
+                        onClick = { onCancel() },
                         text = R.string.cancel
                     )
                     ActionButton(
-                        onDismissRequest = onDismissRequest,
+                        onClick = { onConfirm(gameName, gameLocation) },
                         text = R.string.confirm
                     )
                 }
@@ -107,12 +103,12 @@ fun TextInput(
 
 @Composable
 fun ActionButton(
-    onDismissRequest: () -> Unit,
+    onClick: () -> Unit,
     text: Int
 ) {
     TextButton(
         contentPadding = PaddingValues(horizontal = 10.dp),
-        onClick = { onDismissRequest() },
+        onClick = { onClick() },
         modifier = Modifier.height(30.dp)
     ) {
         Text(

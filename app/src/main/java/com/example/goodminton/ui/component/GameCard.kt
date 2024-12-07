@@ -30,7 +30,7 @@ fun GameCard(
             .padding(16.dp)
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
@@ -41,21 +41,25 @@ fun GameCard(
             ) {
                 Text(
                     text = timestampToDate(gameCard.timestamp),
+                    fontSize = 14.sp,
                     fontStyle = FontStyle.Italic
                 )
                 Text(
                     text = timestampToTime(gameCard.timestamp),
+                    fontSize = 14.sp,
                     fontStyle = FontStyle.Italic
                 )
             }
             HorizontalDivider()
             Text(
                 text = gameCard.name,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 8.dp, bottom = 2.dp)
             )
             Text(
-                text = gameCard.location
+                text = gameCard.location,
+                fontSize = 14.sp
             )
         }
     }
