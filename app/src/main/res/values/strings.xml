@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Goodminton</string>
-    <string name="top_bar_title">Goodminton App</string>
+    <string name="tb_title">Goodminton App</string>
     <string name="fab_text">Add Game</string>
+    <string name="agd_title">Add New Game</string>
+    <string name="agd_name">Name</string>
+    <string name="agd_location">Location</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>

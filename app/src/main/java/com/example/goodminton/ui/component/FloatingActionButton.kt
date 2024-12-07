@@ -10,9 +10,11 @@ import androidx.compose.ui.res.stringResource
 import com.example.goodminton.R
 
 @Composable
-fun FloatingActionButton() {
+fun FloatingActionButton(
+    onClick: () -> Unit
+) {
     ExtendedFloatingActionButton(
-        onClick = {},
+        onClick = { onClick() },
         icon = {
             Icon(
                 imageVector = Icons.Filled.Add,

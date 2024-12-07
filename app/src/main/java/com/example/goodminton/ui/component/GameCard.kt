@@ -20,7 +20,9 @@ import com.example.goodminton.util.timestampToDate
 import com.example.goodminton.util.timestampToTime
 
 @Composable
-fun GameCard(gameCard: GameCardModel) {
+fun GameCard(
+    gameCard: GameCardModel
+) {
     ElevatedCard(
         onClick = {},
         modifier = Modifier
@@ -35,28 +37,25 @@ fun GameCard(gameCard: GameCardModel) {
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = timestampToDate(gameCard.timestamp),
-                    fontStyle = FontStyle.Italic,
-
+                    fontStyle = FontStyle.Italic
                 )
                 Text(
                     text = timestampToTime(gameCard.timestamp),
-                    fontStyle = FontStyle.Italic,
-
+                    fontStyle = FontStyle.Italic
                 )
             }
             HorizontalDivider()
             Text(
                 text = gameCard.name,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Bold
             )
             Text(
-                text = gameCard.location,
-                modifier = Modifier.padding(0.dp),
+                text = gameCard.location
             )
         }
     }

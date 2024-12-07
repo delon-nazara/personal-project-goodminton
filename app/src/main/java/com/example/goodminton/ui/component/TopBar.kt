@@ -15,7 +15,7 @@ fun TopBar() {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = stringResource(R.string.top_bar_title)
+                text = stringResource(R.string.tb_title)
             )
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
