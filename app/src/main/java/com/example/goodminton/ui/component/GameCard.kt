@@ -16,15 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.goodminton.data.model.GameModel
-import com.example.goodminton.util.timestampToDate
-import com.example.goodminton.util.timestampToTime
+import com.example.goodminton.util.convertToDate
+import com.example.goodminton.util.convertToHour
 
 @Composable
 fun GameCard(
+    onGameCardClicked: () -> Unit,
     gameData: GameModel
 ) {
     ElevatedCard(
-        onClick = {},
+        onClick = { onGameCardClicked() },
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 4.dp
         ),
@@ -42,11 +43,11 @@ fun GameCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = timestampToDate(gameData.timestamp),
+                    text = convertToDate(gameData.timestamp),
                     style = MaterialTheme.typography.labelMedium
                 )
                 Text(
-                    text = timestampToTime(gameData.timestamp),
+                    text = convertToHour(gameData.timestamp),
                     style = MaterialTheme.typography.labelMedium
                 )
             }

@@ -12,16 +12,23 @@ fun showToast(
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
-fun timestampToDate(
+fun convertToDate(
     timestamp: Long
 ): String {
     val formatter = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id", "ID"))
     return formatter.format(timestamp)
 }
 
-fun timestampToTime(
+fun convertToHour(
     timestamp: Long
 ): String {
     val formatter = SimpleDateFormat("HH:mm", Locale("id", "ID"))
+    return formatter.format(timestamp)
+}
+
+fun convertToMinute(
+    timestamp: Long
+): String {
+    val formatter = SimpleDateFormat("mm:ss", Locale("id", "ID"))
     return formatter.format(timestamp)
 }

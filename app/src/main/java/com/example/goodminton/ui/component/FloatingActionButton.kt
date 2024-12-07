@@ -12,10 +12,10 @@ import com.example.goodminton.R
 
 @Composable
 fun FloatingActionButton(
-    onClick: () -> Unit
+    onButtonClicked: () -> Unit
 ) {
     ExtendedFloatingActionButton(
-        onClick = { onClick() },
+        onClick = { onButtonClicked() },
         icon = {
             Icon(
                 imageVector = Icons.Filled.Add,
@@ -24,7 +24,7 @@ fun FloatingActionButton(
         },
         text = {
             Text(
-                text = stringResource(R.string.fab_text),
+                text = stringResource(R.string.gs_fab_text),
                 style = MaterialTheme.typography.labelLarge
             )
         }
