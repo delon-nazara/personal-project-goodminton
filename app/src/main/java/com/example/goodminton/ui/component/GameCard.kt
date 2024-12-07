@@ -21,10 +21,11 @@ import com.example.goodminton.util.timestampToTime
 
 @Composable
 fun GameCard(
+    onGameCardClicked: () -> Unit,
     gameData: GameModel
 ) {
     ElevatedCard(
-        onClick = {},
+        onClick = { onGameCardClicked() },
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 4.dp
         ),

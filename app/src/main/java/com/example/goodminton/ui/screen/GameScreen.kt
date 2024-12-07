@@ -1,12 +1,13 @@
 package com.example.goodminton.ui.screen
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,8 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.goodminton.R
+import com.example.goodminton.data.model.GameModel
 import com.example.goodminton.ui.component.AddGameDialog
 import com.example.goodminton.ui.component.FloatingActionButton
 import com.example.goodminton.ui.component.GameCard
@@ -27,7 +31,8 @@ import com.example.goodminton.viewmodel.DatabaseViewModel
 
 @Composable
 fun GameScreen(
-    databaseViewModel: DatabaseViewModel = viewModel()
+    databaseViewModel: DatabaseViewModel = viewModel(),
+    onGameCardClicked: (GameModel) -> Unit
 ) {
     val gameState by databaseViewModel.gameState.collectAsState()
     val errorNameState by databaseViewModel.errorNameState.collectAsState()
@@ -37,14 +42,21 @@ fun GameScreen(
     var showDialog by remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = { TopBar() },
+        topBar = {
+            TopBar(
+                titleText = stringResource(R.string.gs_title),
+                titleStyle = MaterialTheme.typography.titleLarge,
+                canNavigateBack = false,
+                navigateBack = {}
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { showDialog = true }
+                onButtonClicked = { showDialog = true }
             )
         }
     ) { innerPadding ->
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
@@ -61,7 +73,10 @@ fun GameScreen(
                                 modifier = Modifier.height(10.dp)
                             )
                         }
-                        GameCard(item)
+                        GameCard(
+                            onGameCardClicked = { onGameCardClicked(item) },
+                            gameData = item
+                        )
                         if (index == gameState!!.lastIndex) {
                             Spacer(
                                 modifier = Modifier.height(10.dp)
@@ -75,11 +90,11 @@ fun GameScreen(
                 AddGameDialog(
                     errorName = errorNameState,
                     errorLocation = errorLocationState,
-                    onCancel = {
+                    onCancelClicked = {
                         showDialog = false
                         databaseViewModel.clearErrorState()
                     },
-                    onConfirm = { name, location ->
+                    onConfirmClicked = { name, location ->
                         databaseViewModel.createGameData(
                             name = name,
                             location = location,

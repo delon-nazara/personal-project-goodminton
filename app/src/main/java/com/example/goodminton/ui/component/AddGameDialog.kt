@@ -35,14 +35,14 @@ import com.example.goodminton.R
 fun AddGameDialog(
     errorName: String? = null,
     errorLocation: String? = null,
-    onCancel: () -> Unit = {},
-    onConfirm: (String, String) -> Unit = { _, _ -> }
+    onCancelClicked: () -> Unit = {},
+    onConfirmClicked: (String, String) -> Unit = { _, _ -> }
 ) {
     var gameName by remember { mutableStateOf("") }
     var gameLocation by remember { mutableStateOf("") }
 
     Dialog(
-        onDismissRequest = { onCancel() },
+        onDismissRequest = { onCancelClicked() },
     ) {
         Card(
             modifier = Modifier.fillMaxWidth()
@@ -79,12 +79,12 @@ fun AddGameDialog(
                     modifier = Modifier.align(Alignment.End)
                 ) {
                     ActionButton(
-                        onClick = { onCancel() },
-                        text = R.string.cancel
+                        onButtonClicked = { onCancelClicked() },
+                        text = R.string.agd_cancel
                     )
                     ActionButton(
-                        onClick = { onConfirm(gameName, gameLocation) },
-                        text = R.string.confirm
+                        onButtonClicked = { onConfirmClicked(gameName, gameLocation) },
+                        text = R.string.agd_confirm
                     )
                 }
             }
@@ -130,12 +130,12 @@ fun TextInput(
 
 @Composable
 fun ActionButton(
-    onClick: () -> Unit,
+    onButtonClicked: () -> Unit,
     text: Int
 ) {
     TextButton(
         contentPadding = PaddingValues(horizontal = 10.dp),
-        onClick = { onClick() },
+        onClick = { onButtonClicked() },
         modifier = Modifier.height(30.dp)
     ) {
         Text(
