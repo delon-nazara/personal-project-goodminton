@@ -15,13 +15,13 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.goodminton.data.model.GameCardModel
+import com.example.goodminton.data.model.GameModel
 import com.example.goodminton.util.timestampToDate
 import com.example.goodminton.util.timestampToTime
 
 @Composable
 fun GameCard(
-    gameCard: GameCardModel
+    gameData: GameModel
 ) {
     ElevatedCard(
         onClick = {},
@@ -40,25 +40,25 @@ fun GameCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = timestampToDate(gameCard.timestamp),
+                    text = timestampToDate(gameData.timestamp),
                     fontSize = 14.sp,
                     fontStyle = FontStyle.Italic
                 )
                 Text(
-                    text = timestampToTime(gameCard.timestamp),
+                    text = timestampToTime(gameData.timestamp),
                     fontSize = 14.sp,
                     fontStyle = FontStyle.Italic
                 )
             }
             HorizontalDivider()
             Text(
-                text = gameCard.name,
+                text = gameData.name,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 8.dp, bottom = 2.dp)
             )
             Text(
-                text = gameCard.location,
+                text = gameData.location,
                 fontSize = 14.sp
             )
         }

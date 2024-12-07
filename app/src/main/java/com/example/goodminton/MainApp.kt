@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.goodminton.data.source.gameCardList
 import com.example.goodminton.ui.component.AddGameDialog
 import com.example.goodminton.ui.component.FloatingActionButton
 import com.example.goodminton.ui.component.GameCard
@@ -30,8 +31,16 @@ fun MainApp(
     context: Context = LocalContext.current
 ) {
     val databaseViewModel: DatabaseViewModel = viewModel()
+    val gameState by databaseViewModel.gameState.collectAsState()
 
     var showDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        databaseViewModel.readGameData(
+            onSuccess = {},
+            onFailure = { showToast(context, context.getString(R.string.agd_read_failure)) }
+        )
+    }
 
     Scaffold(
         topBar = { TopBar() },
@@ -46,22 +55,32 @@ fun MainApp(
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            LazyColumn {
-                items(gameCardList) { gameCard ->
-                    GameCard(gameCard)
+            if (gameState != null) {
+                LazyColumn {
+                    items(gameState!!) { gameData ->
+                        GameCard(gameData)
+                    }
                 }
             }
             if (showDialog) {
                 AddGameDialog(
                     onCancel = { showDialog = false },
                     onConfirm = { name, location ->
-                        databaseViewModel.addNewGameToDatabase(
+                        databaseViewModel.createGameData(
                             name = name,
                             location = location,
-                            onSuccess = { showDialog = false },
+                            onSuccess = {
+                                databaseViewModel.readGameData(
+                                    onSuccess = { showDialog = false },
+                                    onFailure = {
+                                        showDialog = false
+                                        showToast(context, context.getString(R.string.agd_read_failure))
+                                    }
+                                )
+                            },
                             onFailure = {
                                 showDialog = false
-                                showToast(context, context.getString(R.string.agd_failure))
+                                showToast(context, context.getString(R.string.agd_create_failure))
                             }
                         )
                     }
