@@ -69,4 +69,7 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+
+    // Navigation component
+    implementation(libs.androidx.navigation.compose)
 }
